@@ -114,6 +114,55 @@ public class UserEntrence {
 			e.printStackTrace();
 		}
     }
+    
+    public void addmissingperson(MissingPerson mperson) {
+    	System.out.println("Enter name");
+    	String personname =input.nextLine();
+    	mperson.setName(personname);
+    	System.out.println("Enter surname");
+    	String personsurname = input.nextLine();
+    	mperson.setSurname(personsurname);
+    	System.out.println("Enter gender");
+    	String persongender = input.nextLine();
+    	mperson.setGender(persongender);
+    	System.out.println("Enter place of birth");
+    	String personplaceofbirth = input.nextLine();
+    	mperson.setPlaceOfbirth(personplaceofbirth);
+    	System.out.println("Person date of birth");
+    	String persondateofbirth = input.nextLine();
+    	mperson.setDateOfbirth(persondateofbirth);
+    	System.out.println("Enter weight");
+    	double personweight = input.nextDouble();
+    	mperson.setWeight(personweight);
+    	System.out.println("Enter height");
+    	double personheight = input.nextDouble();
+    	mperson.setHeight(personheight);
+    	input.nextLine();
+    	System.out.println("Enter date missing");
+    	String personmissingdate = input.nextLine();
+    	mperson.setDateMissing(personmissingdate);
+    	System.out.println("Enter skin color");
+    	String personskincolor = input.nextLine();
+    	mperson.setSkinColor(personskincolor);
+    	System.out.println("Enter hair color");
+    	String personhaircolor = input.nextLine();
+    	mperson.setHairColor(personhaircolor);
+    	System.out.println("Enter eye color");
+    	String personeyecolor = input.nextLine();
+    	mperson.setEyeColor(personeyecolor);
+    	
+    	try {
+    		db.setStatement(db.getCon().createStatement());
+			String query = "Insert into missingperson(name, surname, gender, placeOfbirth, dateOfbirth, weight, height, dateMissing, skinColor, hairColor, eyeColor) "
+					+ "VALUES(" + "'" + mperson.getName() + "'," + "'" + mperson.getSurname() + "'," + "'" + mperson.getGender() + "'," + "'" + mperson.getPlaceOfbirth() +
+					  "'," + "'" + mperson.getDateOfbirth() + "'," + "'" + mperson.getWeight() + "'," + "'" + mperson.getHeight() + "'," + "'" + mperson.getDateMissing() +  
+					  "'," + "'" + mperson.getSkinColor() + "'," + "'" + mperson.getHairColor() + "'," + "'" + mperson.getEyeColor() + "')";
+			db.getStatement().executeUpdate(query);
+    		
+    	}catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
    
     public String getUserID() {
         return userID;

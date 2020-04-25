@@ -25,6 +25,10 @@ public class Main {
                         	CrimeFile cfile = new CrimeFile();
                         	ue.addfile(cfile);
                         	break;
+                        case 2:
+                        	MissingPerson mperson = new MissingPerson();
+                        	ue.addmissingperson(mperson);
+                        	break;
                         }
                 	}
                 	else {
