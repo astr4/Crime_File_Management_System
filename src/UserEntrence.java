@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class UserEntrence {
 	DatabaseConnection db = new DatabaseConnection();
-    private String userID;
+    private long userID;
     private String userPass;
     Scanner input = new Scanner(System.in);
     
@@ -30,7 +30,13 @@ public class UserEntrence {
     public boolean userLogin(){
     	boolean loginSuccess = false;
         System.out.println("Please enter your TC.Kimlik number: ");
-        String tcNum = input.nextLine();
+        long tcNum = input.nextLong();
+        int length = String.valueOf(tcNum).length();
+        if(length>11 || length<11 || length<0) {
+        	System.out.println("Wrong input!!!!");
+        	return false;
+        }
+        input.nextLine();
         System.out.println("Please enter your password: ");
         String uPass = input.nextLine();
         String search = "Select * From user";
@@ -39,9 +45,9 @@ public class UserEntrence {
             ResultSet rs = db.getStatement().executeQuery(search);
 
             while(rs.next()) {
-                userID= rs.getString("userID");
+                userID= rs.getLong("userID");
                 userPass= rs.getString("userPass");
-                if (tcNum.equals(getUserID()) && uPass.equals(getUserPass())) {
+                if (tcNum == getUserID() && uPass.equals(getUserPass())) {
                     System.out.print("Login Successfull!");
                     loginSuccess = true;
                 }
@@ -59,7 +65,8 @@ public class UserEntrence {
         try {
             db.setStatement(db.getCon().createStatement());
             System.out.println("Please enter your TC.Kimlik number: ");
-            String userID = input.nextLine();
+            long userID = input.nextLong();
+            input.nextLine();
             System.out.println("Please enter your password: ");
             String userPass = input.nextLine();
             System.out.println("Please re-enter your password: ");
@@ -78,28 +85,38 @@ public class UserEntrence {
 
     }
     //This method used for adding a crime file
-    public void addfile(CrimeFile cfile) {
+    public void addfile(CrimeFile cfile)  {
     	System.out.println("Enter name");
     	String username = input.nextLine();
     	cfile.setUserName(username);
+    	
     	System.out.println("Enter address");
     	String address = input.nextLine();
     	cfile.setUserAddress(address);
+    	
     	System.out.println("Enter phone");
-    	String phone = input.nextLine();
+    	long phone = input.nextLong();
     	cfile.setUserPhone(phone);
+    	input.nextLine();
+    	
     	System.out.println("Enter complaint type");
     	String complainttype = input.nextLine();
     	cfile.setComplaintType(complainttype);
+    	
     	System.out.println("Enter complaint description");
     	String complaintdesc = input.nextLine();
     	cfile.setComplaintDescription(complaintdesc);
+    	
     	System.out.println("Enter crime time");
-    	String crimetime = input.nextLine();
+    	int crimetime = input.nextInt();
     	cfile.setCrimeTime(crimetime);
+    	
     	System.out.println("Enter crime date");
-    	String crimedate = input.nextLine();
-    	cfile.setCrimeDate(crimedate);
+    	int crimeDate = input.nextInt();
+    	input.nextLine();
+    	//String dateFormat = "YYYY-MM-DD hh:mm:ss";
+    	cfile.setCrimeDate(crimeDate);
+    	
     	System.out.println("Enter crime location");
     	String crimeloc = input.nextLine();
     	cfile.setCrimeLocation(crimeloc);
@@ -119,34 +136,44 @@ public class UserEntrence {
     	System.out.println("Enter name");
     	String personname =input.nextLine();
     	mperson.setName(personname);
+    	
     	System.out.println("Enter surname");
     	String personsurname = input.nextLine();
     	mperson.setSurname(personsurname);
+    	
     	System.out.println("Enter gender");
     	String persongender = input.nextLine();
     	mperson.setGender(persongender);
+    	
     	System.out.println("Enter place of birth");
     	String personplaceofbirth = input.nextLine();
     	mperson.setPlaceOfbirth(personplaceofbirth);
+    	
     	System.out.println("Person date of birth");
-    	String persondateofbirth = input.nextLine();
+    	int persondateofbirth = input.nextInt();
     	mperson.setDateOfbirth(persondateofbirth);
+    	
     	System.out.println("Enter weight");
     	double personweight = input.nextDouble();
     	mperson.setWeight(personweight);
+    	
     	System.out.println("Enter height");
     	double personheight = input.nextDouble();
     	mperson.setHeight(personheight);
-    	input.nextLine();
+    	
     	System.out.println("Enter date missing");
-    	String personmissingdate = input.nextLine();
+    	int personmissingdate = input.nextInt();
+    	input.nextLine();
     	mperson.setDateMissing(personmissingdate);
+    	
     	System.out.println("Enter skin color");
     	String personskincolor = input.nextLine();
     	mperson.setSkinColor(personskincolor);
+    	
     	System.out.println("Enter hair color");
     	String personhaircolor = input.nextLine();
     	mperson.setHairColor(personhaircolor);
+    	
     	System.out.println("Enter eye color");
     	String personeyecolor = input.nextLine();
     	mperson.setEyeColor(personeyecolor);
@@ -164,7 +191,7 @@ public class UserEntrence {
 		}
     }
    
-    public String getUserID() {
+    public long getUserID() {
         return userID;
     }
 

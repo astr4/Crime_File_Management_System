@@ -5,10 +5,10 @@ public class MissingPerson {
 	private String surname;
 	private String gender;
 	private String placeOfbirth;
-	private String dateOfbirth;
+	private int dateOfbirth;
 	private double weight;
 	private double height;
-	private String dateMissing;
+	private int dateMissing;
 	private String skinColor;
 	private String hairColor;
 	private String eyeColor;
@@ -38,10 +38,10 @@ public class MissingPerson {
 	public void setPlaceOfbirth(String placeOfbirth) {
 		this.placeOfbirth = placeOfbirth;
 	}
-	public String getDateOfbirth() {
+	public int getDateOfbirth() {
 		return dateOfbirth;
 	}
-	public void setDateOfbirth(String dateOfbirth) {
+	public void setDateOfbirth(int dateOfbirth) {
 		this.dateOfbirth = dateOfbirth;
 	}
 	public double getWeight() {
@@ -56,10 +56,10 @@ public class MissingPerson {
 	public void setHeight(double height) {
 		this.height = height;
 	}
-	public String getDateMissing() {
+	public int getDateMissing() {
 		return dateMissing;
 	}
-	public void setDateMissing(String dateMissing) {
+	public void setDateMissing(int dateMissing) {
 		this.dateMissing = dateMissing;
 	}
 	public String getSkinColor() {
