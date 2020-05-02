@@ -1,6 +1,7 @@
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserEntrence {
@@ -88,16 +89,36 @@ public class UserEntrence {
     public void addfile(CrimeFile cfile)  {
     	System.out.println("Enter name");
     	String username = input.nextLine();
-    	cfile.setUserName(username);
+    	while(cfile.setUserName(username)) {
+    		 System.out.println("Please use only letters!");
+    		System.out.println("Enter name");
+        	username = input.nextLine();
+    		cfile.setUserName(username);
+    	}
     	
     	System.out.println("Enter address");
     	String address = input.nextLine();
     	cfile.setUserAddress(address);
     	
-    	System.out.println("Enter phone");
-    	long phone = input.nextLong();
-    	cfile.setUserPhone(phone);
-    	input.nextLine();
+    	do {
+    		try{
+    			System.out.println("Enter phone");
+    	    	long phone = input.nextLong();
+    	    	input.nextLine();
+    	    	while(cfile.setUserPhone(phone)) {
+    	    		System.out.println("Phone number must be 11 digit!");
+    	    		System.out.println("Enter phone again: ");
+    	    		phone = input.nextLong();
+    	    		cfile.setUserPhone(phone);
+    	    	}
+    			break;
+    		}
+    		catch(InputMismatchException e) {
+    			System.out.println("Please only use numbers!");
+    			}
+    		input.nextLine();
+    	}while(true);
+    	
     	
     	System.out.println("Enter complaint type");
     	String complainttype = input.nextLine();
@@ -107,20 +128,42 @@ public class UserEntrence {
     	String complaintdesc = input.nextLine();
     	cfile.setComplaintDescription(complaintdesc);
     	
-    	System.out.println("Enter crime time");
-    	int crimetime = input.nextInt();
-    	cfile.setCrimeTime(crimetime);
-    	
-    	System.out.println("Enter crime date");
-    	int crimeDate = input.nextInt();
-    	input.nextLine();
-    	//String dateFormat = "YYYY-MM-DD hh:mm:ss";
-    	cfile.setCrimeDate(crimeDate);
-    	
     	System.out.println("Enter crime location");
     	String crimeloc = input.nextLine();
     	cfile.setCrimeLocation(crimeloc);
     
+    	
+    	do {
+    		try{
+    			System.out.println("Enter crime time");
+    			int crimetime = input.nextInt();
+    			cfile.setCrimeTime(crimetime);
+    			break;
+    		}
+    		catch(InputMismatchException e) {
+    			System.out.println("Wrong format!");
+    			}
+    		input.nextLine();
+    	}while(true);
+    	
+    	do {
+    		try{
+    			System.out.println("Enter crime date");
+    	    	int crimeDate = input.nextInt();
+    	    	while(cfile.setCrimeDate(crimeDate)) {
+    	    		System.out.println("Invalid Date!");
+    	    		System.out.println("Enter Date again: ");
+    	    		crimeDate = input.nextInt();
+    	    		cfile.setCrimeDate(crimeDate);
+    	    	}
+    			break;
+    		}
+    		catch(InputMismatchException e) {
+    			System.out.println("Wrong format!");
+    			}
+    		input.nextLine();
+    	}while(true);
+    	
     	try {
 			db.setStatement(db.getCon().createStatement());
 			String query = "Insert into crimefile(userName,userAddress,userPhone,complaintType,complaintDescription,crimeTime,crimeDate,crimeLocation) "

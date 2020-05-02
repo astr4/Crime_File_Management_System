@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -6,7 +7,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         UserEntrence ue = new UserEntrence();
         AdminEntrence ae = new AdminEntrence();
-        System.out.println("Welcome to the Crime File Management System!");     
+        
         while (true) {
              displayMenu();
              System.out.print("Please select your choice: ");
@@ -15,14 +16,14 @@ public class Main {
                 case 0:
                     System.out.println("Have a good day, system terminated...");
                     System.exit(0);
-                case 1:
                 	if(ue.userLogin()) { // Check the user information according to the database 
                 		ue.userdisplay(); //Display the user menu
                         System.out.print("\nPlease select your option: ");
                         int option = input.nextInt();
                         switch(option) {
                         case 1:
-                        	CrimeFile cfile = new CrimeFile();
+                        	System.out.println("Welcome to the Crime File Management System!");     
+                            CrimeFile cfile = new CrimeFile();
                         	ue.addfile(cfile);
                         	break;
                         case 2:

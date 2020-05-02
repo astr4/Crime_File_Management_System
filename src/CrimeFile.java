@@ -1,4 +1,4 @@
-
+import java.util.regex.Pattern;
 
 public class CrimeFile {
 
@@ -37,30 +37,40 @@ public class CrimeFile {
 	public int getCrimeDate() {
 		return crimeDate;
 	}
-	public void setCrimeDate(int crimeDate) {
-		this.crimeDate = crimeDate;
-	}
-	public void setUserName(String userName) {
-		/*
-		for(int i=0;i<userName.length();i++) {
-			if(Character.isDigit(userName.charAt(i))) {
-				//System.out.println("Please write ");
-				userName = "NULL";
-			}
-		}*/
+	public boolean setCrimeDate(int crimeDate) {
+		String fullDate = String.valueOf(crimeDate);
+		if(fullDate.length()!=8)
+			return true;
 		
+		int year = Integer.parseInt(String.valueOf(Character.digit(fullDate.charAt(0), 10)) + String.valueOf(Character.digit(fullDate.charAt(1), 10) + String.valueOf(Character.digit(fullDate.charAt(2), 10))+String.valueOf(Character.digit(fullDate.charAt(3), 10))));
+		int month = Integer.parseInt(String.valueOf(Character.digit(fullDate.charAt(4), 10)) + String.valueOf(Character.digit(fullDate.charAt(5), 10)));
+		int day = Integer.parseInt(String.valueOf(Character.digit(fullDate.charAt(6), 10)) + String.valueOf(Character.digit(fullDate.charAt(7), 10)));
+
+		if(month < 0 || month > 12 || day < 0 || day > 31)
+			return true;
+			
+		this.crimeDate = crimeDate;
+		return false;
+	}
+	public boolean setUserName(String userName) {
+		if(Pattern.matches("[a-zA-Z]+", userName) == false) {
+		    return true;
+		}
 		this.userName = userName;
+		return false;
 	}
 	public void setUserAddress(String userAddress) {
 		this.userAddress = userAddress;
 	}
-	public void setUserPhone(long userPhone) {
+	public boolean setUserPhone(long userPhone) {
+	
 		int length = String.valueOf(userPhone).length();
-        if(length>11 || length<0) {
-        	System.out.println("Wrong format user phone number!!!!");
-        	userPhone = 0;
+        if(length>11 || length<11) {
+        	return true;
         }
-		this.userPhone = userPhone;
+        this.userPhone = userPhone;
+        return false;
+		
 	}
 	public void setComplaintType(String complaintType) {
 		this.complaintType = complaintType;
