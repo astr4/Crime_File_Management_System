@@ -1,69 +1,520 @@
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdminEntrence {
 	DatabaseConnection db = new DatabaseConnection();
-    private int adminID;
-    private String adminPass;
-    private boolean loginSuccess = false;
-    Scanner input = new Scanner(System.in);
-    
-    public AdminEntrence(){
-    	String url = "jdbc:mysql://" + db.getHost() + ":" + db.getPort() + "/" + db.getName() + "?useUnicode=true&characterEncoding=utf8";
+	private int adminID;
+	private String adminPass;
+	Scanner input = new Scanner(System.in);
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
+	public AdminEntrence() {
+		String url = "jdbc:mysql://" + db.getHost() + ":" + db.getPort() + "/" + db.getName()
+				+ "?useUnicode=true&characterEncoding=utf8";
 
-        }
-        catch(ClassNotFoundException ex){
-            System.out.println("Driver not found");
-        }
-        try {
-            db.setCon(DriverManager.getConnection(url, db.getUserName(), db.getPassword()));
-            System.out.println("Connection successful.");
-        } catch (SQLException ex) {
-            System.out.println("Connection fail.");
-        }
-    }
-    
-    //This is for admin login method
-    public void adminLogin(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
 
-        System.out.println("Please enter your police ID: ");
-        int policeId = input.nextInt();
-        input.nextLine();
-        System.out.println("Please enter your police password: ");
-        String policePass = input.nextLine();
-        String query = "select * from admin";
-        try {
-        	db.setStatement(db.getCon().createStatement());
-            ResultSet rs = db.getStatement().executeQuery(query);
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Driver not found");
+		}
+		try {
+			db.setCon(DriverManager.getConnection(url, db.getUserName(), db.getPassword()));
+			System.out.println("Connection successful.");
+		} catch (SQLException ex) {
+			System.out.println("Connection fail.");
+		}
+	}
 
-            while(rs.next()) {
-            	adminID= rs.getInt("adminID");
-                adminPass= rs.getString("adminPass");
-                if ((policeId == getPoliceID()) && policePass.equals(getAdminPass())) {
-                    System.out.println("Login Succesfull!");
-                    loginSuccess = true;
-                }
-            }
-            if(loginSuccess == false) {
-                System.out.print("Wrong police ID  or admin password!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-    }
+	// This is for admin login method
+	public boolean adminLogin(int policeId, String policePass) {
+		boolean loginSuccess = false;
+		String query = "select * from admin";
+		try {
+			db.setStatement(db.getCon().createStatement());
+			ResultSet rs = db.getStatement().executeQuery(query);
 
-    
-    public int getPoliceID() {
-        return adminID;
-    }
+			while (rs.next()) {
+				adminID = rs.getInt("adminID");
+				adminPass = rs.getString("adminPass");
+				if ((policeId == getPoliceID()) && policePass.equals(getAdminPass())) {
+					System.out.println("Login Succesfull!");
+					loginSuccess = true;
+				}
+			}
+			if (loginSuccess == false) {
+				System.out.print("Wrong police ID  or admin password!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return loginSuccess;
+	}
 
-    public String getAdminPass() {
-        return adminPass;
-    }
+	public void viewmissingperson() {
+		String query = "select * from missingperson";
+
+		try {
+			db.setStatement(db.getCon().createStatement());
+			ResultSet rs = db.getStatement().executeQuery(query);
+
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String gender = rs.getString("gender");
+				String placeofbirth = rs.getString("placeofbirth");
+				Date dateofbirth = rs.getDate("dateOfbirth");
+				double weight = rs.getDouble("weight");
+				double height = rs.getDouble("height");
+				Date dateMissing = rs.getDate("dateMissing");
+				String skincolor = rs.getString("skinColor");
+				String haircolor = rs.getString("hairColor");
+				String eyecolor = rs.getString("eyeColor");
+
+				System.out.println("Name: " + name);
+				System.out.println("Surname: " + surname);
+				System.out.println("Gender: " + gender);
+				System.out.println("Place of birth: " + placeofbirth);
+				System.out.println("Date of birth: " + dateofbirth);
+				System.out.println("Weight: " + weight);
+				System.out.println("Height: " + height);
+				System.out.println("Date missing: " + dateMissing);
+				System.out.println("Skin color: " + skincolor);
+				System.out.println("Hair color: " + haircolor);
+				System.out.println("Eye color: " + eyecolor);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void viewmostwantedperson() {
+		String query = "select * from mostwanted";
+
+		try {
+			db.setStatement(db.getCon().createStatement());
+			ResultSet rs = db.getStatement().executeQuery(query);
+
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String gender = rs.getString("gender");
+				Date dateofbirth = rs.getDate("dateOfbirth");
+				String placeofbirth = rs.getString("placeofbirth");
+				String nationality = rs.getString("nationality");
+				String language = rs.getString("language");
+				String charges = rs.getString("charges");
+
+				System.out.println("Name: " + name);
+				System.out.println("Surname: " + surname);
+				System.out.println("Gender: " + gender);
+				System.out.println("Date of birth: " + dateofbirth);
+				System.out.println("Place of birth: " + placeofbirth);
+				System.out.println("Nationality: " + nationality);
+				System.out.println("Language: " + language);
+				System.out.println("Charges: " + charges);
+				System.out.println();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void viewcriminalreports() {
+		String query = "select * from criminalreport";
+
+		try {
+			db.setStatement(db.getCon().createStatement());
+			ResultSet rs = db.getStatement().executeQuery(query);
+
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String gender = rs.getString("gender");
+				String regnumber = rs.getString("regnumber");
+				Date dateofbirth = rs.getDate("dateOfbirth");
+				Date crimeDate = rs.getDate("crimedate");
+				String location = rs.getString("crimelocation");
+				String charge = rs.getString("charge");
+				String punishment = rs.getString("punishment");
+
+				System.out.println("Name: " + name);
+				System.out.println("Surname: " + surname);
+				System.out.println("Gender: " + gender);
+				System.out.println("Registration number: " + regnumber);
+				System.out.println("Date of birth: " + dateofbirth);
+				System.out.println("Crime Date: " + crimeDate);
+				System.out.println("Location: " + location);
+				System.out.println("Charges: " + charge);
+				System.out.println("Punishment: " + punishment);
+				System.out.println();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addmostwantedperson(MostWanted mwanted) {
+		System.out.println("Enter name");
+		String personname = input.nextLine();
+		while (mwanted.setName(personname)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter name again: ");
+			personname = input.nextLine();
+			mwanted.setName(personname);
+		}
+
+		System.out.println("Enter surname");
+		String personsurname = input.nextLine();
+		while (mwanted.setSurname(personsurname)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter surname again: ");
+			personsurname = input.nextLine();
+			mwanted.setSurname(personsurname);
+		}
+
+		System.out.println("Enter gender");
+		String persongender = input.nextLine();
+		while (mwanted.setGender(persongender)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter gender again: ");
+			persongender = input.nextLine();
+			mwanted.setGender(persongender);
+		}
+
+		do {
+			try {
+				System.out.println("Enter date of birth");
+				int persondateofbirth = input.nextInt();
+				while (mwanted.setDateOfbirth(persondateofbirth)) {
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Date again: ");
+					persondateofbirth = input.nextInt();
+					mwanted.setDateOfbirth(persondateofbirth);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+
+		input.nextLine();
+
+		System.out.println("Enter place of birth");
+		String personplaceofbirth = input.nextLine();
+		while (mwanted.setPlaceofBirth(personplaceofbirth)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter place of birth again");
+			personplaceofbirth = input.nextLine();
+			mwanted.setPlaceofBirth(personplaceofbirth);
+		}
+
+		System.out.println("Enter nationality");
+		String nationality = input.nextLine();
+		while (mwanted.setNationality(nationality)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter nationality again");
+			nationality = input.nextLine();
+			mwanted.setNationality(nationality);
+		}
+
+		System.out.println("Enter language");
+		String language = input.nextLine();
+		while (mwanted.setLanguage(language)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter language again");
+			language = input.nextLine();
+			mwanted.setLanguage(language);
+		}
+
+		System.out.println("Enter charges");
+		String charges = input.nextLine();
+		mwanted.setCharges(charges);
+
+		try {
+			db.setStatement(db.getCon().createStatement());
+			String query = "Insert into mostwanted(name, surname, gender, dateOfbirth,placeofbirth, nationality, language, charges) "
+					+ "VALUES(" + "'" + mwanted.getName() + "'," + "'" + mwanted.getSurname() + "'," + "'"
+					+ mwanted.getGender() + "'," + "'" + mwanted.getDateofBirth() + "'," + "'"
+					+ mwanted.getPlaceofBirth() + "'," + "'" + mwanted.getNationality() + "'," + "'"
+					+ mwanted.getLanguage() + "'," + "'" + mwanted.getCharges() + "')";
+			db.getStatement().executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addmissingperson(MissingPerson mperson) {
+
+		System.out.println("Enter name");
+		String personname = input.nextLine();
+		while (mperson.setName(personname)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter name");
+			personname = input.nextLine();
+			mperson.setName(personname);
+		}
+
+		System.out.println("Enter surname");
+		String personsurname = input.nextLine();
+		while (mperson.setSurname(personsurname)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter surname");
+			personsurname = input.nextLine();
+			mperson.setSurname(personsurname);
+		}
+
+		System.out.println("Enter gender");
+		String persongender = input.nextLine();
+		while (mperson.setGender(persongender)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter gender");
+			persongender = input.nextLine();
+			mperson.setGender(persongender);
+		}
+
+		System.out.println("Enter place of birth");
+		String personplaceofbirth = input.nextLine();
+		while (mperson.setPlaceOfbirth(personplaceofbirth)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter place of birth again");
+			personplaceofbirth = input.nextLine();
+			mperson.setPlaceOfbirth(personplaceofbirth);
+		}
+
+		do {
+			try {
+				System.out.println("Enter date of birth");
+				int persondateofbirth = input.nextInt();
+				while (mperson.setDateOfbirth(persondateofbirth)) {
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Date again: ");
+					persondateofbirth = input.nextInt();
+					mperson.setDateOfbirth(persondateofbirth);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+
+		System.out.println("Enter weight");
+		double personweight = input.nextDouble();
+		mperson.setWeight(personweight);
+
+		System.out.println("Enter height");
+		double personheight = input.nextDouble();
+		mperson.setHeight(personheight);
+
+		do {
+			try {
+				System.out.println("Enter date missing");
+				int personmissingdate = input.nextInt();
+				while (mperson.setDateMissing(personmissingdate)) {
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Date again: ");
+					personmissingdate = input.nextInt();
+					mperson.setDateMissing(personmissingdate);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+
+		System.out.println("Enter skin color");
+		String personskincolor = input.nextLine();
+		while (mperson.setSkinColor(personskincolor)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter skin color again");
+			personskincolor = input.nextLine();
+			mperson.setSkinColor(personskincolor);
+		}
+
+		System.out.println("Enter hair color");
+		String personhaircolor = input.nextLine();
+		while (mperson.setHairColor(personhaircolor)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter hair color again");
+			personhaircolor = input.nextLine();
+			mperson.setHairColor(personhaircolor);
+		}
+
+		System.out.println("Enter eye color");
+		String personeyecolor = input.nextLine();
+		while (mperson.setEyeColor(personeyecolor)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter eye color again");
+			personeyecolor = input.nextLine();
+			mperson.setEyeColor(personeyecolor);
+		}
+
+		try {
+			db.setStatement(db.getCon().createStatement());
+			String query = "Insert into missingperson(name, surname, gender, placeOfbirth, dateOfbirth, weight, height, dateMissing, skinColor, hairColor, eyeColor) "
+					+ "VALUES(" + "'" + mperson.getName() + "'," + "'" + mperson.getSurname() + "'," + "'"
+					+ mperson.getGender() + "'," + "'" + mperson.getPlaceOfbirth() + "'," + "'"
+					+ mperson.getDateOfbirth() + "'," + "'" + mperson.getWeight() + "'," + "'" + mperson.getHeight()
+					+ "'," + "'" + mperson.getDateMissing() + "'," + "'" + mperson.getSkinColor() + "'," + "'"
+					+ mperson.getHairColor() + "'," + "'" + mperson.getEyeColor() + "')";
+			db.getStatement().executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addcriminalreport(CriminalReport creport) {
+		System.out.println("Enter name");
+		String personname = input.nextLine();
+		while (creport.setName(personname)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter name");
+			personname = input.nextLine();
+			creport.setName(personname);
+		}
+
+		System.out.println("Enter surname");
+		String personsurname = input.nextLine();
+		while (creport.setSurname(personsurname)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter surname");
+			personsurname = input.nextLine();
+			creport.setSurname(personsurname);
+		}
+
+		System.out.println("Enter gender");
+		String persongender = input.nextLine();
+		while (creport.setGender(persongender)) {
+			System.out.println("Please use only letters!");
+			System.out.println("Enter gender");
+			persongender = input.nextLine();
+			creport.setGender(persongender);
+		}
+
+		System.out.println("Enter registration number");
+		String regnumber = input.nextLine();
+		creport.setRegistrationnumber(regnumber);
+
+		do {
+			try {
+				System.out.println("Enter date of birth");
+				int persondateofbirth = input.nextInt();
+				while (creport.setDateofbirth(persondateofbirth)) {
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Date again: ");
+					persondateofbirth = input.nextInt();
+					creport.setDateofbirth(persondateofbirth);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+
+		do {
+			try {
+				System.out.println("Enter crime date");
+				int crimedate = input.nextInt();
+				while (creport.setCrimeDate(crimedate)) {
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Crime Date again: ");
+					crimedate = input.nextInt();
+					creport.setCrimeDate(crimedate);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+
+		input.nextLine();
+
+		System.out.println("Enter crime location");
+		String location = input.nextLine();
+		creport.setCrimeLocation(location);
+
+		System.out.println("Enter charges ");
+		String charge = input.nextLine();
+		creport.setCharge(charge);
+
+		System.out.println("Enter punishment ");
+		String punishment = input.nextLine();
+		creport.setPunishment(punishment);
+
+		try {
+			db.setStatement(db.getCon().createStatement());
+			String query = "Insert into criminalreport(name, surname, gender, regnumber, dateOfbirth, crimedate, crimelocation, charge, punishment) "
+					+ "VALUES(" + "'" + creport.getName() + "'," + "'" + creport.getSurname() + "'," + "'"
+					+ creport.getGender() + "'," + "'" + creport.getRegistrationnumber() + "'," + "'"
+					+ creport.getDateofbirth() + "'," + "'" + creport.getCrimeDate() + "'," + "'"
+					+ creport.getCrimeLocation() + "'," + "'" + creport.getCharge() + "'," + "'"
+					+ creport.getPunishment() + "')";
+			db.getStatement().executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void deletemostwantedperson(int mostwantedid) {
+		String query = "Delete from mostwanted where id = ?";
+
+		try {
+			db.setPstatement(db.getCon().prepareStatement(query));
+			db.getPstatement().setInt(1, mostwantedid);
+			db.getPstatement().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void deletemissingperson(int missingpersonid) {
+		String query = "Delete from missingperson where id = ?";
+
+		try {
+			db.setPstatement(db.getCon().prepareStatement(query));
+			db.getPstatement().setInt(1, missingpersonid);
+			db.getPstatement().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public int getPoliceID() {
+		return adminID;
+	}
+
+	public String getAdminPass() {
+		return adminPass;
+	}
+
+	public void admindisplay() {
+		System.out.println("\nPress 1 for add a most wanted person...");
+		System.out.println("Press 2 for view most wanted person...");
+		System.out.println("Press 3 for add missing person...");
+		System.out.println("Press 4 for view missing person...");
+		System.out.println("Press 5 for delete most wanted person...");
+		System.out.println("Press 6 for delete missing person...");
+		System.out.println("Press 7 for add criminal report...");
+		System.out.println("Press 8 for view criminal report...");
+	}
 }

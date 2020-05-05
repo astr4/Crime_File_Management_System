@@ -1,22 +1,25 @@
 import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 public class DatabaseConnection {
 
 	private final String userName = "root";
 
-	private final String password = "utku1998"; //You should change the password in order to access the database
+	private final String password = "35083508"; // You should change the password in order to access the database
 
 	private final String name = "crimefilemanagementdb";
 
 	private final String host = "localhost";
 
 	private final int port = 3306;
-	
-	private Connection con = null; 
-	
-    private Statement statement = null;
-    
+
+	private Connection con = null;
+
+	private Statement statement = null;
+
+	private PreparedStatement pstatement = null;
+
 	public Connection getCon() {
 		return con;
 	}
@@ -52,5 +55,12 @@ public class DatabaseConnection {
 	public int getPort() {
 		return port;
 	}
-	
-    }
+
+	public PreparedStatement getPstatement() {
+		return pstatement;
+	}
+
+	public void setPstatement(java.sql.PreparedStatement preparedStatement) {
+		this.pstatement = (PreparedStatement) preparedStatement;
+	}
+}
