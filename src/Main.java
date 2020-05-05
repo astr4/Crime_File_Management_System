@@ -16,6 +16,7 @@ public class Main {
                 case 0:
                     System.out.println("Have a good day, system terminated...");
                     System.exit(0);
+                case 1:
                 	if(ue.userLogin()) { // Check the user information according to the database 
                 		ue.userdisplay(); //Display the user menu
                         System.out.print("\nPlease select your option: ");

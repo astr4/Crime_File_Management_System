@@ -5,7 +5,7 @@ public class DatabaseConnection {
 
 	private final String userName = "root";
 
-	private final String password = "35083508"; //You should change the password in order to access the database
+	private final String password = "utku1998"; //You should change the password in order to access the database
 
 	private final String name = "crimefilemanagementdb";
 

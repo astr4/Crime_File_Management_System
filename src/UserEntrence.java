@@ -123,6 +123,7 @@ public class UserEntrence {
     	System.out.println("Enter complaint type");
     	String complainttype = input.nextLine();
     	cfile.setComplaintType(complainttype);
+    	input.nextLine();
     	
     	System.out.println("Enter complaint description");
     	String complaintdesc = input.nextLine();
@@ -176,25 +177,56 @@ public class UserEntrence {
     }
     
     public void addmissingperson(MissingPerson mperson) {
+    	
     	System.out.println("Enter name");
     	String personname =input.nextLine();
-    	mperson.setName(personname);
-    	
+    	while(mperson.setName(personname)) {
+   		 System.out.println("Please use only letters!");
+   		System.out.println("Enter name");
+       	personname = input.nextLine();
+   		mperson.setName(personname);
+    	}
+    	 	
     	System.out.println("Enter surname");
     	String personsurname = input.nextLine();
-    	mperson.setSurname(personsurname);
+    	while(mperson.setSurname(personsurname)) {
+      		 System.out.println("Please use only letters!");
+      		System.out.println("Enter surname");
+      		personsurname = input.nextLine();
+      		mperson.setSurname(personsurname);
+       	}
     	
     	System.out.println("Enter gender");
     	String persongender = input.nextLine();
+    	while(mperson.setGender(persongender)) {
+     		 System.out.println("Please use only letters!");
+     		System.out.println("Enter gender");
+     		persongender = input.nextLine();
+     		mperson.setGender(persongender);
+      	}
     	mperson.setGender(persongender);
     	
     	System.out.println("Enter place of birth");
     	String personplaceofbirth = input.nextLine();
     	mperson.setPlaceOfbirth(personplaceofbirth);
     	
-    	System.out.println("Person date of birth");
-    	int persondateofbirth = input.nextInt();
-    	mperson.setDateOfbirth(persondateofbirth);
+    	do {
+    		try{
+    			System.out.println("Enter date of birth");
+    	    	int persondateofbirth = input.nextInt();
+    	    	while(mperson.setDateOfbirth(persondateofbirth)) {
+    	    		System.out.println("Invalid Date!");
+    	    		System.out.println("Enter Date again: ");
+    	    		persondateofbirth = input.nextInt();
+    	    		mperson.setDateOfbirth(persondateofbirth);
+    	    	}
+    			break;
+    		}
+    		catch(InputMismatchException e) {
+    			System.out.println("Wrong format!");
+    			}
+    		input.nextLine();
+    	}while(true);
     	
     	System.out.println("Enter weight");
     	double personweight = input.nextDouble();
@@ -204,22 +236,51 @@ public class UserEntrence {
     	double personheight = input.nextDouble();
     	mperson.setHeight(personheight);
     	
-    	System.out.println("Enter date missing");
-    	int personmissingdate = input.nextInt();
-    	input.nextLine();
-    	mperson.setDateMissing(personmissingdate);
+    	do {
+    		try{
+    			System.out.println("Enter date missing");
+    	    	int personmissingdate = input.nextInt();
+    	    	while(mperson.setDateMissing(personmissingdate)) {
+    	    		System.out.println("Invalid Date!");
+    	    		System.out.println("Enter Date again: ");
+    	    		personmissingdate = input.nextInt();
+    	    		mperson.setDateMissing(personmissingdate);
+    	    	}
+    			break;
+    		}
+    		catch(InputMismatchException e) {
+    			System.out.println("Wrong format!");
+    			}
+    		input.nextLine();
+    	}while(true);
     	
     	System.out.println("Enter skin color");
     	String personskincolor = input.nextLine();
-    	mperson.setSkinColor(personskincolor);
-    	
+    	while(mperson.setSkinColor(personskincolor)) {
+   		 	System.out.println("Please use only letters!");
+   		 	System.out.println("Enter skin color again");
+   		 	personskincolor = input.nextLine();
+   		 	mperson.setSkinColor(personskincolor);
+    	}
+    	 	
     	System.out.println("Enter hair color");
     	String personhaircolor = input.nextLine();
-    	mperson.setHairColor(personhaircolor);
-    	
+    	while(mperson.setHairColor(personhaircolor)) {
+    		System.out.println("Please use only letters!");
+      		System.out.println("Enter hair color again");
+      		personhaircolor = input.nextLine();   		
+      		mperson.setHairColor(personhaircolor);
+       	}
+    	 	
     	System.out.println("Enter eye color");
     	String personeyecolor = input.nextLine();
-    	mperson.setEyeColor(personeyecolor);
+    	while(mperson.setEyeColor(personeyecolor)) {
+    		System.out.println("Please use only letters!");
+      		System.out.println("Enter eye color again");
+      		personeyecolor = input.nextLine();
+      		mperson.setEyeColor(personeyecolor);
+       	}
+    	
     	
     	try {
     		db.setStatement(db.getCon().createStatement());
