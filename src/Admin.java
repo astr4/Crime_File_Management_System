@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class AdminEntrence {
-	DatabaseConnection db = new DatabaseConnection();
+public class Admin { // Admin Class to Login and make operations in the system
+	DatabaseConnection db = new DatabaseConnection(); // DatabeseConnection Object
 	private int adminID;
 	private String adminPass;
-	Scanner input = new Scanner(System.in);
+	Scanner input = new Scanner(System.in); // Scanner for input
 
-	public AdminEntrence() {
+	public Admin() { // Admin Constructor for database connection
 		String url = "jdbc:mysql://" + db.getHost() + ":" + db.getPort() + "/" + db.getName()
 				+ "?useUnicode=true&characterEncoding=utf8";
 
@@ -28,40 +28,37 @@ public class AdminEntrence {
 			System.out.println("Connection fail.");
 		}
 	}
-
-	// This is for admin login method
-	public boolean adminLogin(int policeId, String policePass) {
-		boolean loginSuccess = false;
-		String query = "select * from admin";
+	public boolean adminLogin(int policeId, String policePass) { // Admin Login takes police id and password
+		boolean loginSuccess = false; // login status
+		String query = "select * from admin"; // query for admin login
 		try {
 			db.setStatement(db.getCon().createStatement());
 			ResultSet rs = db.getStatement().executeQuery(query);
 
 			while (rs.next()) {
-				adminID = rs.getInt("adminID");
-				adminPass = rs.getString("adminPass");
-				if ((policeId == getPoliceID()) && policePass.equals(getAdminPass())) {
+				adminID = rs.getInt("adminID"); // get the adminID from result set
+				adminPass = rs.getString("adminPass"); // get the adminPass from result set
+				if ((policeId == getPoliceID()) && policePass.equals(getAdminPass())) { // if admin information matches with database
 					System.out.println("Login Succesfull!");
-					loginSuccess = true;
+					loginSuccess = true; // makes login success true
 				}
 			}
-			if (loginSuccess == false) {
+			if (loginSuccess == false) { // if login is not successful
 				System.out.print("Wrong police ID  or admin password!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return loginSuccess;
+		return loginSuccess; // returns the status
 	}
-
-	public void viewmissingperson() {
-		String query = "select * from missingperson";
+	public void viewmissingperson() { //Displays the  all missing persons
+		String query = "select * from missingperson"; //Query 
 
 		try {
-			db.setStatement(db.getCon().createStatement());
+			db.setStatement(db.getCon().createStatement()); // database statement
 			ResultSet rs = db.getStatement().executeQuery(query);
 
-			while (rs.next()) {
+			while (rs.next()) { // gets the data from database and prints it to the screen
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String gender = rs.getString("gender");
@@ -92,14 +89,14 @@ public class AdminEntrence {
 		}
 	}
 
-	public void viewmostwantedperson() {
-		String query = "select * from mostwanted";
+	public void viewmostwantedperson() { //Displays the  all missing persons
+		String query = "select * from mostwanted"; //Query
 
 		try {
-			db.setStatement(db.getCon().createStatement());
+			db.setStatement(db.getCon().createStatement()); // database statement
 			ResultSet rs = db.getStatement().executeQuery(query);
 
-			while (rs.next()) {
+			while (rs.next()) { // gets the data from database and prints it to the screen
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String gender = rs.getString("gender");
@@ -125,15 +122,15 @@ public class AdminEntrence {
 		}
 
 	}
-
-	public void viewcriminalreports() {
-		String query = "select * from criminalreport";
+	
+	public void viewcriminalreports() { //Displays the  all criminal reports
+		String query = "select * from criminalreport"; //Query for criminal report
 
 		try {
-			db.setStatement(db.getCon().createStatement());
+			db.setStatement(db.getCon().createStatement()); //database statement
 			ResultSet rs = db.getStatement().executeQuery(query);
 
-			while (rs.next()) {
+			while (rs.next()) { // gets the data from database and prints it to the screen
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String gender = rs.getString("gender");
@@ -161,11 +158,10 @@ public class AdminEntrence {
 		}
 
 	}
-
-	public void addmostwantedperson(MostWanted mwanted) {
+	public void addmostwantedperson(MostWanted mwanted) { // creates new most wanted person and adds it to the DB
 		System.out.println("Enter name");
 		String personname = input.nextLine();
-		while (mwanted.setName(personname)) {
+		while (mwanted.setName(personname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter name again: ");
 			personname = input.nextLine();
@@ -173,8 +169,8 @@ public class AdminEntrence {
 		}
 
 		System.out.println("Enter surname");
-		String personsurname = input.nextLine();
-		while (mwanted.setSurname(personsurname)) {
+		String personsurname = input.nextLine(); 
+		while (mwanted.setSurname(personsurname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter surname again: ");
 			personsurname = input.nextLine();
@@ -183,7 +179,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter gender");
 		String persongender = input.nextLine();
-		while (mwanted.setGender(persongender)) {
+		while (mwanted.setGender(persongender)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter gender again: ");
 			persongender = input.nextLine();
@@ -194,7 +190,7 @@ public class AdminEntrence {
 			try {
 				System.out.println("Enter date of birth");
 				int persondateofbirth = input.nextInt();
-				while (mwanted.setDateOfbirth(persondateofbirth)) {
+				while (mwanted.setDateOfbirth(persondateofbirth)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					persondateofbirth = input.nextInt();
@@ -211,7 +207,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter place of birth");
 		String personplaceofbirth = input.nextLine();
-		while (mwanted.setPlaceofBirth(personplaceofbirth)) {
+		while (mwanted.setPlaceofBirth(personplaceofbirth)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter place of birth again");
 			personplaceofbirth = input.nextLine();
@@ -220,7 +216,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter nationality");
 		String nationality = input.nextLine();
-		while (mwanted.setNationality(nationality)) {
+		while (mwanted.setNationality(nationality)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter nationality again");
 			nationality = input.nextLine();
@@ -229,7 +225,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter language");
 		String language = input.nextLine();
-		while (mwanted.setLanguage(language)) {
+		while (mwanted.setLanguage(language)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter language again");
 			language = input.nextLine();
@@ -240,7 +236,7 @@ public class AdminEntrence {
 		String charges = input.nextLine();
 		mwanted.setCharges(charges);
 
-		try {
+		try { // insert the data to the database
 			db.setStatement(db.getCon().createStatement());
 			String query = "Insert into mostwanted(name, surname, gender, dateOfbirth,placeofbirth, nationality, language, charges) "
 					+ "VALUES(" + "'" + mwanted.getName() + "'," + "'" + mwanted.getSurname() + "'," + "'"
@@ -255,11 +251,11 @@ public class AdminEntrence {
 
 	}
 
-	public void addmissingperson(MissingPerson mperson) {
+	public void addmissingperson(MissingPerson mperson) { // Adds new missing person to database
 
 		System.out.println("Enter name");
 		String personname = input.nextLine();
-		while (mperson.setName(personname)) {
+		while (mperson.setName(personname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter name");
 			personname = input.nextLine();
@@ -268,7 +264,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter surname");
 		String personsurname = input.nextLine();
-		while (mperson.setSurname(personsurname)) {
+		while (mperson.setSurname(personsurname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter surname");
 			personsurname = input.nextLine();
@@ -277,7 +273,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter gender");
 		String persongender = input.nextLine();
-		while (mperson.setGender(persongender)) {
+		while (mperson.setGender(persongender)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter gender");
 			persongender = input.nextLine();
@@ -286,7 +282,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter place of birth");
 		String personplaceofbirth = input.nextLine();
-		while (mperson.setPlaceOfbirth(personplaceofbirth)) {
+		while (mperson.setPlaceOfbirth(personplaceofbirth)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter place of birth again");
 			personplaceofbirth = input.nextLine();
@@ -297,7 +293,7 @@ public class AdminEntrence {
 			try {
 				System.out.println("Enter date of birth");
 				int persondateofbirth = input.nextInt();
-				while (mperson.setDateOfbirth(persondateofbirth)) {
+				while (mperson.setDateOfbirth(persondateofbirth)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					persondateofbirth = input.nextInt();
@@ -322,7 +318,7 @@ public class AdminEntrence {
 			try {
 				System.out.println("Enter date missing");
 				int personmissingdate = input.nextInt();
-				while (mperson.setDateMissing(personmissingdate)) {
+				while (mperson.setDateMissing(personmissingdate)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					personmissingdate = input.nextInt();
@@ -337,7 +333,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter skin color");
 		String personskincolor = input.nextLine();
-		while (mperson.setSkinColor(personskincolor)) {
+		while (mperson.setSkinColor(personskincolor)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter skin color again");
 			personskincolor = input.nextLine();
@@ -346,7 +342,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter hair color");
 		String personhaircolor = input.nextLine();
-		while (mperson.setHairColor(personhaircolor)) {
+		while (mperson.setHairColor(personhaircolor)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter hair color again");
 			personhaircolor = input.nextLine();
@@ -355,14 +351,14 @@ public class AdminEntrence {
 
 		System.out.println("Enter eye color");
 		String personeyecolor = input.nextLine();
-		while (mperson.setEyeColor(personeyecolor)) {
+		while (mperson.setEyeColor(personeyecolor)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter eye color again");
 			personeyecolor = input.nextLine();
 			mperson.setEyeColor(personeyecolor);
 		}
 
-		try {
+		try { // insert the data to the database
 			db.setStatement(db.getCon().createStatement());
 			String query = "Insert into missingperson(name, surname, gender, placeOfbirth, dateOfbirth, weight, height, dateMissing, skinColor, hairColor, eyeColor) "
 					+ "VALUES(" + "'" + mperson.getName() + "'," + "'" + mperson.getSurname() + "'," + "'"
@@ -380,7 +376,7 @@ public class AdminEntrence {
 	public void addcriminalreport(CriminalReport creport) {
 		System.out.println("Enter name");
 		String personname = input.nextLine();
-		while (creport.setName(personname)) {
+		while (creport.setName(personname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter name");
 			personname = input.nextLine();
@@ -389,7 +385,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter surname");
 		String personsurname = input.nextLine();
-		while (creport.setSurname(personsurname)) {
+		while (creport.setSurname(personsurname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter surname");
 			personsurname = input.nextLine();
@@ -398,7 +394,7 @@ public class AdminEntrence {
 
 		System.out.println("Enter gender");
 		String persongender = input.nextLine();
-		while (creport.setGender(persongender)) {
+		while (creport.setGender(persongender)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter gender");
 			persongender = input.nextLine();
@@ -413,7 +409,7 @@ public class AdminEntrence {
 			try {
 				System.out.println("Enter date of birth");
 				int persondateofbirth = input.nextInt();
-				while (creport.setDateofbirth(persondateofbirth)) {
+				while (creport.setDateofbirth(persondateofbirth)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					persondateofbirth = input.nextInt();
@@ -430,7 +426,7 @@ public class AdminEntrence {
 			try {
 				System.out.println("Enter crime date");
 				int crimedate = input.nextInt();
-				while (creport.setCrimeDate(crimedate)) {
+				while (creport.setCrimeDate(crimedate)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Crime Date again: ");
 					crimedate = input.nextInt();
@@ -457,7 +453,7 @@ public class AdminEntrence {
 		String punishment = input.nextLine();
 		creport.setPunishment(punishment);
 
-		try {
+		try { // insert the data to the database
 			db.setStatement(db.getCon().createStatement());
 			String query = "Insert into criminalreport(name, surname, gender, regnumber, dateOfbirth, crimedate, crimelocation, charge, punishment) "
 					+ "VALUES(" + "'" + creport.getName() + "'," + "'" + creport.getSurname() + "'," + "'"
@@ -473,7 +469,7 @@ public class AdminEntrence {
 
 	}
 
-	public void deletemostwantedperson(int mostwantedid) {
+	public void deletemostwantedperson(int mostwantedid) { // delete the most wanted person from database
 		String query = "Delete from mostwanted where id = ?";
 
 		try {
@@ -486,10 +482,10 @@ public class AdminEntrence {
 
 	}
 
-	public void deletemissingperson(int missingpersonid) {
+	public void deletemissingperson(int missingpersonid) { // delete the missing person from database
 		String query = "Delete from missingperson where id = ?";
 
-		try {
+		try { // delete the data from database
 			db.setPstatement(db.getCon().prepareStatement(query));
 			db.getPstatement().setInt(1, missingpersonid);
 			db.getPstatement().executeUpdate();
@@ -506,8 +502,8 @@ public class AdminEntrence {
 	public String getAdminPass() {
 		return adminPass;
 	}
-
-	public void admindisplay() {
+	
+	public void admindisplay() { // Displays the admin menu
 		System.out.println("\nPress 1 for add a most wanted person...");
 		System.out.println("Press 2 for view most wanted person...");
 		System.out.println("Press 3 for add missing person...");

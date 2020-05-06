@@ -7,7 +7,7 @@ public class CrimeFileUnitTest {
 	CrimeFile cFile = new CrimeFile();
 
 	@Test
-	public void userNameTest() {
+	public void userNameTest() { // Test for username validation
 		cFile.setUserName("Ayberk");
 		assertEquals(cFile.getUserName(), "Ayberk");
 
@@ -19,7 +19,7 @@ public class CrimeFileUnitTest {
 	}
 
 	@Test
-	public void userPhoneTest() {
+	public void userPhoneTest() { // Test for user phone validation
 
 		cFile.setUserPhone(23244422689L);
 		assertEquals(cFile.getUserPhone(), 23244422689L);
@@ -29,7 +29,7 @@ public class CrimeFileUnitTest {
 	}
 
 	@Test
-	public void crimeDateTest() {
+	public void crimeDateTest() { // Test for crime date validation
 		cFile.setCrimeDate(19980505);
 		assertEquals(cFile.getCrimeDate(), 19980505);
 
@@ -44,7 +44,7 @@ public class CrimeFileUnitTest {
 	}
 
 	@Test
-	public void crimeTimeTest() {
+	public void crimeTimeTest() { // Test for crime time validation
 		cFile.setCrimeTime(184530);
 		assertEquals(cFile.getCrimeTime(), 184530);
 

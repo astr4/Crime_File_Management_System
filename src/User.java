@@ -4,13 +4,13 @@ import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class UserEntrence {
-	DatabaseConnection db = new DatabaseConnection();
+public class User { // User Class to Login and make operations in the system
+	DatabaseConnection db = new DatabaseConnection(); // DatabaseConnection Object
 	private long userID;
 	private String userPass;
-	Scanner input = new Scanner(System.in);
+	Scanner input = new Scanner(System.in); // Scanner Object
 
-	public UserEntrence() {
+	public User() { // User Constructor for database connection
 		String url = "jdbc:mysql://" + db.getHost() + ":" + db.getPort() + "/" + db.getName()
 				+ "?useUnicode=true&characterEncoding=utf8";
 
@@ -27,38 +27,37 @@ public class UserEntrence {
 			System.out.println("Connection fail.");
 		}
 	}
-
-	// This method is used for login to the system as user
-	public boolean userLogin(long tcNum, String uPass) {
-		boolean loginSuccess = false;
+	
+	public boolean userLogin(long tcNum, String uPass) {  // User Login takes TC and password
+		boolean loginSuccess = false; // login status
 		int length = String.valueOf(tcNum).length();
-		if (length > 11 || length < 11 || length < 0) {
+		if (length > 11 || length < 11 || length < 0) { // input validation
 			System.out.println("Wrong input!!!!");
 			return false;
 		}
-		String search = "Select * From user";
+		String search = "Select * From user"; // Query for user
 		try {
-			db.setStatement(db.getCon().createStatement());
+			db.setStatement(db.getCon().createStatement()); // Database statement
 			ResultSet rs = db.getStatement().executeQuery(search);
 
-			while (rs.next()) {
+			while (rs.next()) { // get user information one by one from database
 				userID = rs.getLong("userID");
 				userPass = rs.getString("userPass");
-				if (tcNum == getUserID() && uPass.equals(getUserPass())) {
+				if (tcNum == getUserID() && uPass.equals(getUserPass())) { // if user information matches with database
 					System.out.print("Login Successfull!");
-					loginSuccess = true;
+					loginSuccess = true; // makes true to loginSucces
 				}
 			}
-			if (loginSuccess == false) {
+			if (loginSuccess == false) { // if login is not successful
 				System.out.print("Wrong TC.Kimlik number or password!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return loginSuccess;
+		return loginSuccess; // returns the status
 	}
 
-	// This method is used for register the system as user
+	// This method is used for register the system as new user
 	public void userRegister() {
 		try {
 			db.setStatement(db.getCon().createStatement());
@@ -69,7 +68,7 @@ public class UserEntrence {
 			String userPass = input.nextLine();
 			System.out.println("Please re-enter your password: ");
 			String uPass2 = input.nextLine();
-			if (userPass.equals(uPass2)) {
+			if (userPass.equals(uPass2)) { // insert the data to the database
 				String search = "Insert Into user(userID,userPass) VALUES(" + "'" + userID + "'," + "'" + userPass
 						+ "')";
 				db.getStatement().executeUpdate(search);
@@ -81,12 +80,11 @@ public class UserEntrence {
 		}
 
 	}
-
 	// This method used for adding a crime file
 	public void addfile(CrimeFile cfile) {
 		System.out.println("Enter name");
 		String username = input.nextLine();
-		while (cfile.setUserName(username)) {
+		while (cfile.setUserName(username)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter name");
 			username = input.nextLine();
@@ -102,7 +100,7 @@ public class UserEntrence {
 				System.out.println("Enter phone");
 				long phone = input.nextLong();
 				input.nextLine();
-				while (cfile.setUserPhone(phone)) {
+				while (cfile.setUserPhone(phone)) { // input validation
 					System.out.println("Phone number must be 11 digit!");
 					System.out.println("Enter phone again: ");
 					phone = input.nextLong();
@@ -133,7 +131,7 @@ public class UserEntrence {
 			try {
 				System.out.println("Enter crime time");
 				int crimeTime = input.nextInt();
-				while (cfile.setCrimeTime(crimeTime)) {
+				while (cfile.setCrimeTime(crimeTime)) { // input validation
 					System.out.println("Invalid time!");
 					System.out.println("Enter Time again: ");
 					crimeTime = input.nextInt();
@@ -150,7 +148,7 @@ public class UserEntrence {
 			try {
 				System.out.println("Enter crime date");
 				int crimeDate = input.nextInt();
-				while (cfile.setCrimeDate(crimeDate)) {
+				while (cfile.setCrimeDate(crimeDate)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					crimeDate = input.nextInt();
@@ -163,7 +161,7 @@ public class UserEntrence {
 			input.nextLine();
 		} while (true);
 
-		try {
+		try { // insert the data to the database
 			db.setStatement(db.getCon().createStatement());
 			String query = "Insert into crimefile(userName,userAddress,userPhone,complaintType,complaintDescription,crimeTime,crimeDate,crimeLocation) "
 					+ "VALUES(" + "'" + cfile.getUserName() + "'," + "'" + cfile.getUserAddress() + "'," + "'"
@@ -180,7 +178,7 @@ public class UserEntrence {
 
 		System.out.println("Enter name");
 		String personname = input.nextLine();
-		while (mperson.setName(personname)) {
+		while (mperson.setName(personname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter name");
 			personname = input.nextLine();
@@ -189,7 +187,7 @@ public class UserEntrence {
 
 		System.out.println("Enter surname");
 		String personsurname = input.nextLine();
-		while (mperson.setSurname(personsurname)) {
+		while (mperson.setSurname(personsurname)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter surname");
 			personsurname = input.nextLine();
@@ -198,7 +196,7 @@ public class UserEntrence {
 
 		System.out.println("Enter gender");
 		String persongender = input.nextLine();
-		while (mperson.setGender(persongender)) {
+		while (mperson.setGender(persongender)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter gender");
 			persongender = input.nextLine();
@@ -207,7 +205,7 @@ public class UserEntrence {
 
 		System.out.println("Enter place of birth");
 		String personplaceofbirth = input.nextLine();
-		while (mperson.setPlaceOfbirth(personplaceofbirth)) {
+		while (mperson.setPlaceOfbirth(personplaceofbirth)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter place of birth again: ");
 			personplaceofbirth = input.nextLine();
@@ -218,7 +216,7 @@ public class UserEntrence {
 			try {
 				System.out.println("Enter date of birth");
 				int persondateofbirth = input.nextInt();
-				while (mperson.setDateOfbirth(persondateofbirth)) {
+				while (mperson.setDateOfbirth(persondateofbirth)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					persondateofbirth = input.nextInt();
@@ -241,7 +239,7 @@ public class UserEntrence {
 		input.nextLine();
 		System.out.println("Enter hair color");
 		String personhaircolor = input.nextLine();
-		while (mperson.setHairColor(personhaircolor)) {
+		while (mperson.setHairColor(personhaircolor)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter hair color again");
 			personhaircolor = input.nextLine();
@@ -250,7 +248,7 @@ public class UserEntrence {
 
 		System.out.println("Enter skin color");
 		String personskincolor = input.nextLine();
-		while (mperson.setSkinColor(personskincolor)) {
+		while (mperson.setSkinColor(personskincolor)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter skin color again");
 			personskincolor = input.nextLine();
@@ -259,7 +257,7 @@ public class UserEntrence {
 
 		System.out.println("Enter eye color");
 		String personeyecolor = input.nextLine();
-		while (mperson.setEyeColor(personeyecolor)) {
+		while (mperson.setEyeColor(personeyecolor)) { // input validation
 			System.out.println("Please use only letters!");
 			System.out.println("Enter eye color again");
 			personeyecolor = input.nextLine();
@@ -270,7 +268,7 @@ public class UserEntrence {
 			try {
 				System.out.println("Enter date missing");
 				int personmissingdate = input.nextInt();
-				while (mperson.setDateMissing(personmissingdate)) {
+				while (mperson.setDateMissing(personmissingdate)) { // input validation
 					System.out.println("Invalid Date!");
 					System.out.println("Enter Date again: ");
 					personmissingdate = input.nextInt();
@@ -283,7 +281,7 @@ public class UserEntrence {
 			input.nextLine();
 		} while (true);
 
-		try {
+		try { // insert the data to the database
 			db.setStatement(db.getCon().createStatement());
 			String query = "Insert into missingperson(name, surname, gender, placeOfbirth, dateOfbirth, weight, height, dateMissing, skinColor, hairColor, eyeColor) "
 					+ "VALUES(" + "'" + mperson.getName() + "'," + "'" + mperson.getSurname() + "'," + "'"
@@ -305,9 +303,7 @@ public class UserEntrence {
 	public String getUserPass() {
 		return userPass;
 	}
-
-	// User menu
-	public void userdisplay() {
+	public void userdisplay() { // Displays the User menu
 		System.out.println("\nPress 1 for add a crime file...");
 		System.out.println("Press 2 for add a missing person file...");
 	}

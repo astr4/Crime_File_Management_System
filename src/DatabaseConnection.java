@@ -2,17 +2,17 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 
-public class DatabaseConnection {
+public class DatabaseConnection { // DatabaseConnection class keeps the information of database
 
 	private final String userName = "root";
 
 	private final String password = "35083508"; // You should change the password in order to access the database
 
-	private final String name = "crimefilemanagementdb";
+	private final String name = "crimefilemanagementdb"; // database name
 
-	private final String host = "localhost";
+	private final String host = "localhost"; // host name
 
-	private final int port = 3306;
+	private final int port = 3306; // port number
 
 	private Connection con = null;
 

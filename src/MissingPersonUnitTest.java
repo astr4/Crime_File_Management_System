@@ -3,10 +3,10 @@ import org.junit.Test;
 
 public class MissingPersonUnitTest {
 
-	MissingPerson mPerson = new MissingPerson();
+	MissingPerson mPerson = new MissingPerson(); // MissingPerson Object
 
 	@Test
-	public void nameTest() {
+	public void nameTest() { // Test for name validation
 		mPerson.setName("Ayberk");
 		assertEquals(mPerson.getName(), "Ayberk");
 
@@ -18,7 +18,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void surnameTest() {
+	public void surnameTest() { // Test for surname validation
 		mPerson.setSurname("Ortancalar");
 		assertEquals(mPerson.getSurname(), "Ortancalar");
 
@@ -30,7 +30,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void genderTest() {
+	public void genderTest() { // Test for gender validation
 		mPerson.setGender("Male");
 		assertEquals(mPerson.getGender(), "Male");
 
@@ -45,7 +45,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void placeOfBirth() {
+	public void placeOfBirth() { // Test for place of birth validation
 		mPerson.setPlaceOfbirth("Adana");
 		assertEquals(mPerson.getPlaceOfbirth(), "Adana");
 
@@ -57,7 +57,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void dateOfBirthTest() {
+	public void dateOfBirthTest() { // Test for date of birth validation
 		mPerson.setDateOfbirth(19980505);
 		assertEquals(mPerson.getDateOfbirth(), 19980505);
 
@@ -69,7 +69,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void dateMissingTest() {
+	public void dateMissingTest() { // Test for missing date validation
 		mPerson.setDateOfbirth(19980505);
 		assertEquals(mPerson.getDateOfbirth(), 19980505);
 
@@ -84,7 +84,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void skinColorTest() {
+	public void skinColorTest() { // Test for skin color validation
 		mPerson.setSkinColor("Black");
 		assertEquals(mPerson.getSkinColor(), "Black");
 
@@ -99,7 +99,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void hairColorTest() {
+	public void hairColorTest() { // Test for hair color validation
 		mPerson.setHairColor("Red");
 		assertEquals(mPerson.getHairColor(), "Red");
 
@@ -117,7 +117,7 @@ public class MissingPersonUnitTest {
 	}
 
 	@Test
-	public void eyeColorTest() {
+	public void eyeColorTest() { // Test for eye color validation
 		mPerson.setEyeColor("Blue");
 		assertEquals(mPerson.getEyeColor(), "Blue");
 

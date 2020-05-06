@@ -1,6 +1,6 @@
 import java.util.regex.Pattern;
 
-public class CriminalReport {
+public class CriminalReport { // CriminalReport class keeps the information of CriminalReport.
 
 	private String name;
 	private String surname;
@@ -17,7 +17,7 @@ public class CriminalReport {
 	}
 
 	public boolean setName(String name) {
-		if (Pattern.matches("[a-zA-Z]+", name) == false) {
+		if (Pattern.matches("[a-zA-Z]+", name) == false) { // input validation
 			return true;
 		}
 		this.name = name;
@@ -28,8 +28,8 @@ public class CriminalReport {
 		return surname;
 	}
 
-	public boolean setSurname(String surname) {
-		if (Pattern.matches("[a-zA-Z]+", surname) == false) {
+	public boolean setSurname(String surname) { 
+		if (Pattern.matches("[a-zA-Z]+", surname) == false) { // input validation
 			return true;
 		}
 		this.surname = surname;
@@ -41,7 +41,7 @@ public class CriminalReport {
 	}
 
 	public boolean setGender(String gender) {
-		if (Pattern.matches("[a-zA-Z]+", gender) == false) {
+		if (Pattern.matches("[a-zA-Z]+", gender) == false) { // input validation
 			return true;
 		}
 		this.gender = gender;
@@ -62,15 +62,15 @@ public class CriminalReport {
 
 	public boolean setDateofbirth(int dateofbirth) {
 		String birthdate = String.valueOf(dateofbirth);
-		if (birthdate.length() != 8)
+		if (birthdate.length() != 8) // input validation
 			return true;
-
+		//Separates the date to month and day
 		int month = Integer.parseInt(String.valueOf(Character.digit(birthdate.charAt(4), 10))
 				+ String.valueOf(Character.digit(birthdate.charAt(5), 10)));
 		int day = Integer.parseInt(String.valueOf(Character.digit(birthdate.charAt(6), 10))
 				+ String.valueOf(Character.digit(birthdate.charAt(7), 10)));
 
-		if (month < 0 || month > 12 || day < 0 || day > 31)
+		if (month < 0 || month > 12 || day < 0 || day > 31) // input validation
 			return true;
 		this.dateofbirth = dateofbirth;
 		return false;
@@ -82,15 +82,15 @@ public class CriminalReport {
 
 	public boolean setCrimeDate(int crimeDate) {
 		String crimedate = String.valueOf(crimeDate);
-		if (crimedate.length() != 8)
+		if (crimedate.length() != 8) // input validation
 			return true;
-
+		//Separates the date to month and day
 		int month = Integer.parseInt(String.valueOf(Character.digit(crimedate.charAt(4), 10))
 				+ String.valueOf(Character.digit(crimedate.charAt(5), 10)));
 		int day = Integer.parseInt(String.valueOf(Character.digit(crimedate.charAt(6), 10))
 				+ String.valueOf(Character.digit(crimedate.charAt(7), 10)));
 
-		if (month < 0 || month > 12 || day < 0 || day > 31)
+		if (month < 0 || month > 12 || day < 0 || day > 31) // input validation
 			return true;
 		this.crimeDate = crimeDate;
 		return false;

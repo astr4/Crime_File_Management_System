@@ -1,6 +1,6 @@
 import java.util.regex.Pattern;
 
-public class CrimeFile {
+public class CrimeFile { // CrimeFile class keeps the information of Crime file.
 
 	private String userName;
 	private String userAddress;
@@ -45,15 +45,15 @@ public class CrimeFile {
 
 	public boolean setCrimeDate(int crimeDate) {
 		String fullDate = String.valueOf(crimeDate);
-		if (fullDate.length() != 8)
+		if (fullDate.length() != 8) // input validation
 			return true;
-
+		//Separates the date to month and day
 		int month = Integer.parseInt(String.valueOf(Character.digit(fullDate.charAt(4), 10))
 				+ String.valueOf(Character.digit(fullDate.charAt(5), 10)));
 		int day = Integer.parseInt(String.valueOf(Character.digit(fullDate.charAt(6), 10))
 				+ String.valueOf(Character.digit(fullDate.charAt(7), 10)));
 
-		if (month < 0 || month > 12 || day < 0 || day > 31)
+		if (month < 0 || month > 12 || day < 0 || day > 31) // input validation
 			return true;
 
 		this.crimeDate = crimeDate;
@@ -61,7 +61,7 @@ public class CrimeFile {
 	}
 
 	public boolean setUserName(String userName) {
-		if (Pattern.matches("[a-zA-Z]+", userName) == false) {
+		if (Pattern.matches("[a-zA-Z]+", userName) == false) { // input validation
 			return true;
 		}
 		this.userName = userName;
@@ -75,7 +75,7 @@ public class CrimeFile {
 	public boolean setUserPhone(long userPhone) {
 
 		int length = String.valueOf(userPhone).length();
-		if (length > 11 || length < 11) {
+		if (length > 11 || length < 11) { // input validation
 			return true;
 		}
 		this.userPhone = userPhone;
@@ -93,9 +93,9 @@ public class CrimeFile {
 
 	public boolean setCrimeTime(int crimeTime) {
 		String fullTime = String.valueOf(crimeTime);
-		if (fullTime.length() != 6)
+		if (fullTime.length() != 6) // input validation
 			return true;
-
+		//Separates the time to hour, minute and seconds
 		int hour = Integer.parseInt(String.valueOf(Character.digit(fullTime.charAt(0), 10))
 				+ String.valueOf(Character.digit(fullTime.charAt(1), 10)));
 		int min = Integer.parseInt(String.valueOf(Character.digit(fullTime.charAt(2), 10))
@@ -103,7 +103,7 @@ public class CrimeFile {
 		int sec = Integer.parseInt(String.valueOf(Character.digit(fullTime.charAt(4), 10))
 				+ String.valueOf(Character.digit(fullTime.charAt(5), 10)));
 
-		if (hour <= 0 || hour >= 24 || min < 0 || min >= 60 || sec < 0 || sec >= 60)
+		if (hour <= 0 || hour >= 24 || min < 0 || min >= 60 || sec < 0 || sec >= 60) // input validation
 			return true;
 		this.crimeTime = crimeTime;
 		return false;

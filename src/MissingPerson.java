@@ -1,6 +1,6 @@
 import java.util.regex.Pattern;
 
-public class MissingPerson {
+public class MissingPerson { // MissingPerson class keeps the information of Missing Person.
 
 	private String name;
 	private String surname;
@@ -19,7 +19,7 @@ public class MissingPerson {
 	}
 
 	public boolean setName(String name) {
-		if (Pattern.matches("[a-zA-Z]+", name) == false) {
+		if (Pattern.matches("[a-zA-Z]+", name) == false) { // input validation
 			return true;
 		}
 		this.name = name;
@@ -31,7 +31,7 @@ public class MissingPerson {
 	}
 
 	public boolean setSurname(String surname) {
-		if (Pattern.matches("[a-zA-Z]+", surname) == false) {
+		if (Pattern.matches("[a-zA-Z]+", surname) == false) { // input validation
 			return true;
 		}
 		this.surname = surname;
@@ -43,7 +43,7 @@ public class MissingPerson {
 	}
 
 	public boolean setGender(String gender) {
-		if (Pattern.matches("[a-zA-Z]+", gender) == false) {
+		if (Pattern.matches("[a-zA-Z]+", gender) == false) { // input validation
 			return true;
 		}
 		this.gender = gender;
@@ -55,7 +55,7 @@ public class MissingPerson {
 	}
 
 	public boolean setPlaceOfbirth(String placeOfbirth) {
-		if (Pattern.matches("[a-zA-Z]+", placeOfbirth) == false) {
+		if (Pattern.matches("[a-zA-Z]+", placeOfbirth) == false) { // input validation
 			return true;
 		}
 		this.placeOfbirth = placeOfbirth;
@@ -68,7 +68,7 @@ public class MissingPerson {
 
 	public boolean setDateOfbirth(int dateOfbirth) {
 		String birthdate = String.valueOf(dateOfbirth);
-		if (birthdate.length() != 8)
+		if (birthdate.length() != 8) // input validation
 			return true;
 
 		int month = Integer.parseInt(String.valueOf(Character.digit(birthdate.charAt(4), 10))
@@ -76,7 +76,7 @@ public class MissingPerson {
 		int day = Integer.parseInt(String.valueOf(Character.digit(birthdate.charAt(6), 10))
 				+ String.valueOf(Character.digit(birthdate.charAt(7), 10)));
 
-		if (month < 0 || month > 12 || day < 0 || day > 31)
+		if (month < 0 || month > 12 || day < 0 || day > 31) // input validation
 			return true;
 		this.dateOfbirth = dateOfbirth;
 		return false;
@@ -104,7 +104,7 @@ public class MissingPerson {
 
 	public boolean setDateMissing(int dateMissing) {
 		String missingdate = String.valueOf(dateMissing);
-		if (missingdate.length() != 8)
+		if (missingdate.length() != 8) // input validation
 			return true;
 
 		int month = Integer.parseInt(String.valueOf(Character.digit(missingdate.charAt(4), 10))
@@ -112,7 +112,7 @@ public class MissingPerson {
 		int day = Integer.parseInt(String.valueOf(Character.digit(missingdate.charAt(6), 10))
 				+ String.valueOf(Character.digit(missingdate.charAt(7), 10)));
 
-		if (month < 0 || month > 12 || day < 0 || day > 31)
+		if (month < 0 || month > 12 || day < 0 || day > 31) // input validation
 			return true;
 		this.dateMissing = dateMissing;
 		return false;
@@ -123,7 +123,7 @@ public class MissingPerson {
 	}
 
 	public boolean setSkinColor(String skinColor) {
-		if (Pattern.matches("[a-zA-Z]+", skinColor) == false) {
+		if (Pattern.matches("[a-zA-Z]+", skinColor) == false) { // input validation
 			return true;
 		}
 		this.skinColor = skinColor;
@@ -135,7 +135,7 @@ public class MissingPerson {
 	}
 
 	public boolean setHairColor(String hairColor) {
-		if (Pattern.matches("[a-zA-Z]+", hairColor) == false) {
+		if (Pattern.matches("[a-zA-Z]+", hairColor) == false) { // input validation
 			return true;
 		}
 		this.hairColor = hairColor;
@@ -147,11 +147,10 @@ public class MissingPerson {
 	}
 
 	public boolean setEyeColor(String eyeColor) {
-		if (Pattern.matches("[a-zA-Z]+", eyeColor) == false) {
+		if (Pattern.matches("[a-zA-Z]+", eyeColor) == false) { // input validation
 			return true;
 		}
 		this.eyeColor = eyeColor;
 		return false;
 	}
-
 }
