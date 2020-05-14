@@ -1,6 +1,7 @@
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -295,6 +296,127 @@ public class User { // User Class to Login and make operations in the system
 			e.printStackTrace();
 		}
 	}
+	
+	public void viewhotnews() {
+		String query = "select * from hotnews order by newsdate DESC"; //Query for criminal report
+
+		try {
+			db.setStatement(db.getCon().createStatement()); //database statement
+			ResultSet rs = db.getStatement().executeQuery(query);
+
+			while (rs.next()) { // gets the data from database and prints it to the screen
+				String title = rs.getString("title");
+				String text = rs.getString("text");
+				Date newsDate = rs.getDate("newsdate");
+				
+				System.out.println("Title: " + title);
+				System.out.println("Text: " + text);
+				System.out.println("NewsDate: " + newsDate);
+				System.out.println();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addComplaint(UserComplaint ucomp) {
+		do {
+			try {
+				System.out.println("Enter complaint date");
+				int compdate = input.nextInt();
+				while (ucomp.setComplaintDate(compdate)) { // input validation
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Complaint Date again: ");
+					compdate = input.nextInt();
+					ucomp.setComplaintDate(compdate);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+		input.nextLine();
+		
+		System.out.println("Enter complaint title: ");
+		String comptitle = input.nextLine();
+		ucomp.setTitle(comptitle);
+		
+		System.out.println("Enter subject: ");
+		String subject = input.nextLine();
+		ucomp.setSubject(subject);
+		
+		System.out.println("Enter complaint: ");
+		String complaint = input.nextLine();
+		ucomp.setComplaint(complaint);
+		
+		try { // insert the data to the database
+			db.setStatement(db.getCon().createStatement());
+			String query = "Insert into usercomplaint(comptitle,usercomplaint, compsubject, compdate)"
+					+ "VALUES(" + "'" + ucomp.getTitle() + "'," + "'" + ucomp.getComplaint() + "'," + "'" + ucomp.getSubject() + "'," + "'"
+					+ ucomp.getComplaintDate() + "')";
+			db.getStatement().executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	//Buraya bakýn sýkýntý var
+	public void addFeedback(Feedback feedback) {
+		System.out.println("Enter name: ");
+		String name = input.nextLine();
+		feedback.setUsername(name);
+		while (feedback.setUsername(name)) { // input validation
+			System.out.println("Please use only letters!");
+			System.out.println("Enter name again: ");
+			name = input.nextLine();
+			feedback.setUsername(name);
+		}
+		
+		System.out.println("Enter surname: ");
+		String surname = input.nextLine();
+		feedback.setSurName(surname);
+		while (feedback.setSurName(surname)) { // input validation
+			System.out.println("Please use only letters!");
+			System.out.println("Enter surname again: ");
+			surname = input.nextLine();
+			feedback.setSurName(surname);
+		}
+		
+		System.out.println("Enter your feedback: ");
+		String userf = input.nextLine();
+		feedback.setFeedback(userf);
+		
+		
+		do {
+			try {
+				System.out.println("Enter feedback date");
+				int feedbackdate = input.nextInt();
+				while (feedback.setFeedbackdate(feedbackdate)) { // input validation
+					System.out.println("Invalid Date!");
+					System.out.println("Enter Feedback Date again: ");
+					feedbackdate = input.nextInt();
+					feedback.setFeedbackdate(feedbackdate);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+		
+		try { // insert the data to the database
+			db.setStatement(db.getCon().createStatement());
+			String query = "Insert into feedback(name,surname,feedback,feedbackdate)"
+					+ "VALUES(" + "'" + feedback.getUsername() + "'," + "'" + feedback.getUsersurname() + "'," + "'" + feedback.getFeedback() + "'," + "'"
+					+ feedback.getFeedbackdate() + "')";
+			db.getStatement().executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public long getUserID() {
 		return userID;
@@ -306,5 +428,8 @@ public class User { // User Class to Login and make operations in the system
 	public void userdisplay() { // Displays the User menu
 		System.out.println("\nPress 1 for add a crime file...");
 		System.out.println("Press 2 for add a missing person file...");
+		System.out.println("Press 3 for display hot news...");
+		System.out.println("Press 4 for add user complaint...");
+		System.out.println("Press 5 for adding feedback...");
 	}
 }

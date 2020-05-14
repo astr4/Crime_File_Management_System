@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.mysql.jdbc.PreparedStatement;
+
 public class Admin { // Admin Class to Login and make operations in the system
 	DatabaseConnection db = new DatabaseConnection(); // DatabeseConnection Object
 	private int adminID;
@@ -158,6 +160,90 @@ public class Admin { // Admin Class to Login and make operations in the system
 		}
 
 	}
+	
+	public void viewuserscomplaints() { //Displays the  all user complaints
+		String query = "select * from usercomplaint"; //Query for user complaint
+
+		try {
+			db.setStatement(db.getCon().createStatement()); //database statement
+			ResultSet rs = db.getStatement().executeQuery(query);
+
+			while (rs.next()) { // gets the data from database and prints it to the screen
+				int complaintid = rs.getInt("complaintid");
+				String title = rs.getString("comptitle");
+				String complaint = rs.getString("usercomplaint");
+				String subject = rs.getString("compsubject");
+				Date compdate = rs.getDate("compdate");
+				
+				System.out.println("Complaint id: " + complaintid);
+				System.out.println("Title: " + title);
+				System.out.println("Complaint: " + complaint);
+				System.out.println("Subject: " + subject);
+				System.out.println("Complaint Date: " + compdate);
+				System.out.println();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void viewusersfeedback() { //Displays the  all user feedback
+		String query = "select * from feedback"; //Query for user feedback
+
+		try {
+			db.setStatement(db.getCon().createStatement()); //database statement
+			ResultSet rs = db.getStatement().executeQuery(query);
+
+			while (rs.next()) { // gets the data from database and prints it to the screen
+				int feedbackid = rs.getInt("feedbackid");
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String feedback = rs.getString("feedback");
+				Date feedbackdate = rs.getDate("feedbackdate");
+				
+				System.out.println("Feedback id: " + feedbackid);
+				System.out.println("Name: " + name);
+				System.out.println("Surname: " + surname);
+				System.out.println("Feedback: " + feedback);
+				System.out.println("Feedback Date: " + feedbackdate);
+				System.out.println();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void addReplytoComplaint(UserComplaint ucomp) {
+		viewuserscomplaints();
+		System.out.println("Do you want to reply ? (yes or no)");
+		String answer = input.nextLine();
+		if(answer.equals("yes")) {
+			System.out.println("Enter your reply: ");
+			String reply = input.nextLine();
+			ucomp.setAdminReply(reply);
+			
+			System.out.println("Please enter the id that you want to reply: ");
+			int replyid = input.nextInt();
+			String query = "update usercomplaint set adminreply = ? where complaintid = ?";
+			
+			try {
+				db.setPstatement(db.getCon().prepareStatement(query));
+				db.getPstatement().setString(1,reply);
+				db.getPstatement().setInt(2,replyid);
+				db.getPstatement().executeUpdate();
+				
+				System.out.println("Reply entered succesfully");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+		
+	}
+	
 	public void addmostwantedperson(MostWanted mwanted) { // creates new most wanted person and adds it to the DB
 		System.out.println("Enter name");
 		String personname = input.nextLine();
@@ -468,6 +554,45 @@ public class Admin { // Admin Class to Login and make operations in the system
 		}
 
 	}
+	
+	public void addHotNews(HotNews hotnews) {
+		System.out.println("Enter news title");
+		String title = input.nextLine();
+		hotnews.setTitle(title);
+		
+		System.out.println("Enter news: ");
+		String news = input.nextLine();
+		hotnews.setText(news);
+		
+		
+		do {
+			try {
+				System.out.println("Enter news date");
+				int newsdate = input.nextInt();
+				while (hotnews.setNewsDate(newsdate)) { // input validation
+					System.out.println("Invalid New Date!");
+					System.out.println("Enter News Date again: ");
+					newsdate = input.nextInt();
+					hotnews.setNewsDate(newsdate);
+				}
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format!");
+			}
+			input.nextLine();
+		} while (true);
+		
+		try { // insert the data to the database
+			db.setStatement(db.getCon().createStatement());
+			String query = "Insert into hotnews(title, text, newsdate)"
+					+ "VALUES(" + "'" + hotnews.getTitle() + "'," + "'" + hotnews.getText() + "'," + "'"
+					+ hotnews.getNewsDate() + "')";
+			db.getStatement().executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void deletemostwantedperson(int mostwantedid) { // delete the most wanted person from database
 		String query = "Delete from mostwanted where id = ?";
@@ -494,6 +619,32 @@ public class Admin { // Admin Class to Login and make operations in the system
 		}
 
 	}
+	
+	public void deletehotnews(int hotnewsid) { // delete the hot news from database
+		String query = "Delete from hotnews where newsid = ?";
+
+		try { // delete the data from database
+			db.setPstatement(db.getCon().prepareStatement(query));
+			db.getPstatement().setInt(1, hotnewsid);
+			db.getPstatement().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void deletefeedback(int feedbackid) { // delete the feedback from database
+		String query = "Delete from feedback where feedbackid = ?";
+
+		try { // delete the data from database
+			db.setPstatement(db.getCon().prepareStatement(query));
+			db.getPstatement().setInt(1, feedbackid);
+			db.getPstatement().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public int getPoliceID() {
 		return adminID;
@@ -512,5 +663,11 @@ public class Admin { // Admin Class to Login and make operations in the system
 		System.out.println("Press 6 for delete missing person...");
 		System.out.println("Press 7 for add criminal report...");
 		System.out.println("Press 8 for view criminal report...");
+		System.out.println("Press 9 for add hot news...");
+		System.out.println("Press 10 for delete hot news...");
+		System.out.println("Press 11 for view users complaint...");
+		System.out.println("Press 12 for replying a complaint...");
+		System.out.println("Press 13 for view users feedback...");
+		System.out.println("Press 14 for delete users feedback...");
 	}
 }

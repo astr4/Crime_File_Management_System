@@ -35,6 +35,17 @@ public class Main { // Main class to run project
 						MissingPerson mperson = new MissingPerson();// new MissingPerson Object
 						user.addmissingperson(mperson); // adding the missing person here
 						break;
+					case 3:
+						user.viewhotnews();
+						break;
+					case 4:
+						UserComplaint ucomp = new UserComplaint();
+						user.addComplaint(ucomp);
+						break;
+					case 5:
+						Feedback feedback = new Feedback();
+						user.addFeedback(feedback);
+						break;
 					}
 				} else { // if user login not successful
 					System.out.println("\nAccess Denied");
@@ -82,6 +93,30 @@ public class Main { // Main class to run project
 						break;
 					case 8: // Displays Criminal Reports
 						admin.viewcriminalreports();
+						break;
+					case 9:
+						HotNews hnews = new HotNews();
+						admin.addHotNews(hnews);
+						break;
+					case 10:
+						System.out.println("Enter the hotnews id for delete: ");
+						int hnewsid = input.nextInt(); // get the hot news id 
+					    admin.deletehotnews(hnewsid); 
+						break;
+					case 11:
+						admin.viewuserscomplaints();
+						break;
+					case 12:
+						UserComplaint ucomp = new UserComplaint();
+						admin.addReplytoComplaint(ucomp);
+						break;
+					case 13:
+						admin.viewusersfeedback();
+						break;
+					case 14:
+						System.out.println("Enter the feedback id for delete: ");
+						int fid = input.nextInt(); // get the feedback id from user
+						admin.deletefeedback(fid);
 						break;
 					}
 				} else { // if admin login not successful
