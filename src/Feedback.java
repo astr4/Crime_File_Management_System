@@ -1,6 +1,6 @@
 import java.util.regex.Pattern;
 
-public class Feedback {
+public class Feedback { // Feedback class keeps the information of user's feedback
 
 	private String username;
 	private String usersurname;
@@ -26,7 +26,7 @@ public class Feedback {
 		if (Pattern.matches("[a-zA-Z]+", surname) == false) { // input validation
 			return true;
 		}
-		this.username = surname;
+		this.usersurname = surname;
 		return false;
 	}
 	public String getFeedback() {

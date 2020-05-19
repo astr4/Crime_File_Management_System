@@ -1,5 +1,5 @@
 
-public class UserComplaint {
+public class UserComplaint { // UserComplaint class keeps the information of user's complaint.
 
 	private String title;
 	private String subject;

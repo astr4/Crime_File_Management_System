@@ -1,5 +1,5 @@
 
-public class HotNews {
+public class HotNews { //Keep the information about hot news
 
 	private String title;
 	private String text;

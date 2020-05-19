@@ -124,8 +124,8 @@ public class MissingPersonUnitTest {
 		mPerson.setEyeColor("Black");
 		assertEquals(mPerson.getEyeColor(), "Black");
 
-		mPerson.setEyeColor("12345");
-		assertNotSame(mPerson.getEyeColor(), "12345");
+		mPerson.setEyeColor("1234");
+		assertNotSame(mPerson.getEyeColor(), "1234");
 
 		mPerson.setEyeColor("*@,.-%^+=");
 		assertNotSame(mPerson.getEyeColor(), "*@,.-%^+=");

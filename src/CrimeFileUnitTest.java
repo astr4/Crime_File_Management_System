@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class CrimeFileUnitTest {
 
-	CrimeFile cFile = new CrimeFile();
+	CrimeFile cFile = new CrimeFile(); // CrimeFile Object
 
 	@Test
 	public void userNameTest() { // Test for username validation
@@ -21,8 +21,8 @@ public class CrimeFileUnitTest {
 	@Test
 	public void userPhoneTest() { // Test for user phone validation
 
-		cFile.setUserPhone(23244422689L);
-		assertEquals(cFile.getUserPhone(), 23244422689L);
+		cFile.setUserPhone(2324442268L);
+		assertEquals(cFile.getUserPhone(), 2324442268L);
 
 		cFile.setUserPhone(12345);
 		assertNotSame(cFile.getUserPhone(), 12345);

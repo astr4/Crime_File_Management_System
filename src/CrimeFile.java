@@ -75,7 +75,7 @@ public class CrimeFile { // CrimeFile class keeps the information of Crime file.
 	public boolean setUserPhone(long userPhone) {
 
 		int length = String.valueOf(userPhone).length();
-		if (length > 11 || length < 11) { // input validation
+		if (length > 10 || length < 10) { // input validation
 			return true;
 		}
 		this.userPhone = userPhone;

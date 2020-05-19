@@ -35,16 +35,20 @@ public class Main { // Main class to run project
 						MissingPerson mperson = new MissingPerson();// new MissingPerson Object
 						user.addmissingperson(mperson); // adding the missing person here
 						break;
-					case 3:
+					case 3: // Displays Hot News
 						user.viewhotnews();
 						break;
 					case 4:
-						UserComplaint ucomp = new UserComplaint();
-						user.addComplaint(ucomp);
+						UserComplaint ucomp = new UserComplaint(); // new UserComplaint Object
+						user.addComplaint(ucomp); //adding the user's complaint
 						break;
 					case 5:
-						Feedback feedback = new Feedback();
-						user.addFeedback(feedback);
+						Feedback feedback = new Feedback(); // new Feedback Object
+						user.addFeedback(feedback); //adding the user's feedback
+						break;
+					case 6:
+						CrimeFile cfile2 = new CrimeFile(); // another CrimeFile Object
+						user.generateAndAdd100CrimeFile(cfile2); // adding 100 crime file 
 						break;
 					}
 				} else { // if user login not successful
@@ -94,8 +98,8 @@ public class Main { // Main class to run project
 					case 8: // Displays Criminal Reports
 						admin.viewcriminalreports();
 						break;
-					case 9:
-						HotNews hnews = new HotNews();
+					case 9: // Adding new Hot News the database
+						HotNews hnews = new HotNews(); // new HotNews Object
 						admin.addHotNews(hnews);
 						break;
 					case 10:
@@ -103,14 +107,14 @@ public class Main { // Main class to run project
 						int hnewsid = input.nextInt(); // get the hot news id 
 					    admin.deletehotnews(hnewsid); 
 						break;
-					case 11:
+					case 11: // Displays all user's complaints
 						admin.viewuserscomplaints();
 						break;
 					case 12:
-						UserComplaint ucomp = new UserComplaint();
+						UserComplaint ucomp = new UserComplaint(); // new UserComplaint Object
 						admin.addReplytoComplaint(ucomp);
 						break;
-					case 13:
+					case 13: // Displays all user's feedback
 						admin.viewusersfeedback();
 						break;
 					case 14:

@@ -217,20 +217,20 @@ public class Admin { // Admin Class to Login and make operations in the system
 
 	}
 	
-	public void addReplytoComplaint(UserComplaint ucomp) {
-		viewuserscomplaints();
+	public void addReplytoComplaint(UserComplaint ucomp) { // creates new user complaint, update the adminreply and  adds it to the DB
+		viewuserscomplaints(); //display users complaints
 		System.out.println("Do you want to reply ? (yes or no)");
-		String answer = input.nextLine();
+		String answer = input.nextLine(); //getting reply answer
 		if(answer.equals("yes")) {
 			System.out.println("Enter your reply: ");
-			String reply = input.nextLine();
+			String reply = input.nextLine(); //getting reply message
 			ucomp.setAdminReply(reply);
 			
 			System.out.println("Please enter the id that you want to reply: ");
 			int replyid = input.nextInt();
 			String query = "update usercomplaint set adminreply = ? where complaintid = ?";
 			
-			try {
+			try { // update the data to the database
 				db.setPstatement(db.getCon().prepareStatement(query));
 				db.getPstatement().setString(1,reply);
 				db.getPstatement().setInt(2,replyid);
@@ -458,7 +458,7 @@ public class Admin { // Admin Class to Login and make operations in the system
 			e.printStackTrace();
 		}
 	}
-
+	// This method used for adding a criminal report
 	public void addcriminalreport(CriminalReport creport) {
 		System.out.println("Enter name");
 		String personname = input.nextLine();
@@ -554,7 +554,7 @@ public class Admin { // Admin Class to Login and make operations in the system
 		}
 
 	}
-	
+	// This method used for adding a hot news
 	public void addHotNews(HotNews hotnews) {
 		System.out.println("Enter news title");
 		String title = input.nextLine();
