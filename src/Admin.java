@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import com.mysql.jdbc.PreparedStatement;
-
 public class Admin { // Admin Class to Login and make operations in the system
 	DatabaseConnection db = new DatabaseConnection(); // DatabeseConnection Object
 	private int adminID;

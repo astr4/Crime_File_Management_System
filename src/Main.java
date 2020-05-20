@@ -11,6 +11,7 @@ public class Main { // Main class to run project
 			displayMenu(); // Displays the menu
 			System.out.print("Please select your choice: ");
 			int selection = input.nextInt(); // get the selection from user
+			input.nextLine();
 			switch (selection) {
 			case 0: //terminate the system.
 				System.out.println("Have a good day, system terminated...");
